@@ -3,12 +3,21 @@
  * Script créant et vérifiant que les champs requis s'ajoutent bien
  */
 
-if(!defined('INC_FROM_DOLIBARR')) {
+
 	define('INC_FROM_CRON_SCRIPT', true);
+	
+	
+	//require('../class/pouvoirs.class.php');
 
-	require('../config.php');
-
-}
+	
+	$powersdb=new TPDOdb;
+	$powersdb->db->debug=true;
+	
+	
+	//$power=new THaPouvoirs;
+	//$power->init_db_by_vars($powersdb);
+	
+	
 
 
 /* uncomment
