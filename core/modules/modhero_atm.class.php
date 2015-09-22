@@ -136,7 +136,8 @@ class modhero_atm extends DolibarrModules
 		// 'stock'            to add a tab in stock view
 		// 'thirdparty'       to add a tab in third party view
 		// 'user'             to add a tab in user view
-        $this->tabs = array();
+        $this->tabs = array('thirdparty:+heros:heros:hero_atm@hero_atm:1:/hero_atm/heros.php',
+							'thirdparty:+pouvoirs:pouvoirs:hero_atm@hero_atm:1:/hero_atm/pouvoirs.php');
 
         // Dictionaries
 	    if (! isset($conf->hero_atm->enabled))
@@ -188,34 +189,65 @@ class modhero_atm extends DolibarrModules
 		// Add here entries to declare new menus
 		//
 		// Example to declare a new Top Menu entry and its Left menu entry:
-		// $this->menu[$r]=array(	'fk_menu'=>0,			                // Put 0 if this is a top menu
-		//							'type'=>'top',			                // This is a Top menu entry
-		//							'titre'=>'hero_atm top menu',
-		//							'mainmenu'=>'hero_atm',
-		//							'leftmenu'=>'hero_atm',
-		//							'url'=>'/hero_atm/pagetop.php',
-		//							'langs'=>'mylangfile@hero_atm',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-		//							'position'=>100,
-		//							'enabled'=>'$conf->hero_atm->enabled',	// Define condition to show or hide menu entry. Use '$conf->hero_atm->enabled' if entry must be visible if module is enabled.
-		//							'perms'=>'1',			                // Use 'perms'=>'$user->rights->hero_atm->level1->level2' if you want your menu with a permission rules
-		//							'target'=>'',
-		//							'user'=>2);				                // 0=Menu for internal users, 1=external users, 2=both
-		// $r++;
+		 $this->menu[$r]=array(	'fk_menu'=>'fk_mainmenu=companies',			                // Put 0 if this is a top menu
+									'type'=>'left',			                // This is a left menu entry
+									'titre'=>'hero_atm',
+									'mainmenu'=>'companies',
+									'leftmenu'=>'hero_atm',
+									'url'=>'/hero_atm/heros.php',
+									'langs'=>'hero_atm@hero_atm',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+									'position'=>110,
+									'enabled'=>'$conf->global->MAIN_MODULE_HERO_ATM',	// Define condition to show or hide menu entry. Use '$conf->hero_atm->enabled' if entry must be visible if module is enabled.
+									//'perms'=>'$user->rights->hero_atm->dossier->read || $user->rights->hero_atm->dossier->write || 1==1',			                // Use 'perms'=>'$user->rights->hero_atm->level1->level2' if you want your menu with a permission rules
+									'perms'=>'',
+									'target'=>'',
+									'user'=>2);				                // 0=Menu for internal users, 1=external users, 2=both
+		 $r++;
+		 
+		 
+		 // Example to declare a new Top Menu entry and its Left menu entry:
+         $this->menu[$r]=array( 'fk_menu'=>'fk_mainmenu=companies,fk_leftmenu=hero_atm',                            // Put 0 if this is a top menu
+                                    'type'=>'left',                         // This is a left menu entry
+                                    'titre'=>'Nouveau hero',
+                                    'mainmenu'=>'',
+                                    'leftmenu'=>'hero_atm',
+                                    'url'=>'/hero_atm/heros.php?action=add',
+                                    'langs'=>'hero_atm@hero_atm',           // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+                                    'position'=>119,
+                                    //'perms'=>'$user->rights->hero_atm->dossier->read || $user->rights->hero_atm->dossier->write',                         // Use 'perms'=>'$user->rights->hero_atm->level1->level2' if you want your menu with a permission rules
+                                    'target'=>'',
+                                    'user'=>2);                             // 0=Menu for internal users, 1=external users, 2=both
+         $r++;
+         $this->menu[$r]=array( 'fk_menu'=>'fk_mainmenu=companies,fk_leftmenu=hero_atm',                            // Put 0 if this is a top menu
+                                    'type'=>'left',                         // This is a left menu entry
+                                    'titre'=>'heros',
+                                    'mainmenu'=>'',
+                                    'leftmenu'=>'hero_atm',
+                                    'url'=>'/hero_atm/heros.php',
+                                    'langs'=>'hero_atm@hero_atm',           // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+                                    'position'=>120,
+                                    'enabled'=>'$conf->global->MAIN_MODULE_HERO_ATM',   // Define condition to show or hide menu entry. Use '$conf->hero_atm->enabled' if entry must be visible if module is enabled.
+                                    //'perms'=>'$user->rights->hero_atm->dossier->read || $user->rights->hero_atm->dossier->write',                         // Use 'perms'=>'$user->rights->hero_atm->level1->level2' if you want your menu with a permission rules
+                                    'target'=>'',
+                                    'user'=>2);                             // 0=Menu for internal users, 1=external users, 2=both
+         $r++;
+		 
+		 
 		//
 		// Example to declare a Left Menu entry into an existing Top menu entry:
-		// $this->menu[$r]=array(	'fk_menu'=>'fk_mainmenu=xxx',		    // Use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
-		//							'type'=>'left',			                // This is a Left menu entry
-		//							'titre'=>'hero_atm left menu',
-		//							'mainmenu'=>'xxx',
-		//							'leftmenu'=>'hero_atm',
-		//							'url'=>'/hero_atm/pagelevel2.php',
-		//							'langs'=>'mylangfile@hero_atm',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-		//							'position'=>100,
-		//							'enabled'=>'$conf->hero_atm->enabled',  // Define condition to show or hide menu entry. Use '$conf->hero_atm->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-		//							'perms'=>'1',			                // Use 'perms'=>'$user->rights->hero_atm->level1->level2' if you want your menu with a permission rules
-		//							'target'=>'',
-		//							'user'=>2);				                // 0=Menu for internal users, 1=external users, 2=both
-		// $r++;
+		 $this->menu[$r]=array(	'fk_menu'=>'fk_mainmenu=companies,fk_leftmenu=hero_atm',			                // Put 0 if this is a top menu
+									'type'=>'left',			                // This is a left menu entry
+									'titre'=>'pouvoirs',
+									'mainmenu'=>'',
+									'leftmenu'=>'hero_atm',
+									'url'=>'/hero_atm/pouvoirs.php',
+									'langs'=>'hero_atm@hero_atm',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+									'position'=>130,
+									'enabled'=>'$conf->global->MAIN_MODULE_HERO_ATM',	// Define condition to show or hide menu entry. Use '$conf->hero_atm->enabled' if entry must be visible if module is enabled.
+									//'perms'=>'$user->rights->hero_atm->dossier->read || $user->rights->hero_atm->dossier->write',			                // Use 'perms'=>'$user->rights->hero_atm->level1->level2' if you want your menu with a permission rules
+									'target'=>'',
+									'user'=>2);				                // 0=Menu for internal users, 1=external users, 2=both
+		 $r++;
 
 
 		// Exports
@@ -249,8 +281,7 @@ class modhero_atm extends DolibarrModules
 		$sql = array();
 		
 		define('INC_FROM_DOLIBARR',true);
-
-		dol_include_once('/hero_atm/config.php');
+		
 		dol_include_once('/hero_atm/script/create-maj-base.php');
 
 		$result=$this->_load_tables('/hero_atm/sql/');

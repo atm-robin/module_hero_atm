@@ -4,29 +4,21 @@
  */
 
 
-	define('INC_FROM_CRON_SCRIPT', true);
+	/*if(!defined('INC_FROM_DOLIBARR')) {*/
+    define('INC_FROM_CRON_SCRIPT', true);
 	
+    dol_include_once('hero_atm/config.php');
+	dol_include_once('/hero_atm/class/hero.class.php');
+	dol_include_once('/hero_atm/class/pouvoir.class.php');
 	
-	//require('../class/pouvoirs.class.php');
-
+    $PDOdb=new TPDOdb;
+   // $PDOdb->debug=true;
+   
+   
+   $power=new THaPouvoir;
+	$power->init_db_by_vars($PDOdb);
 	
-	$powersdb=new TPDOdb;
-	$powersdb->db->debug=true;
+    
+    $hero=new Thero;
+    $hero->init_db_by_vars($PDOdb);
 	
-	
-	//$power=new THaPouvoirs;
-	//$power->init_db_by_vars($powersdb);
-	
-	
-
-
-/* uncomment
-
-
-dol_include_once('/mymodule/class/xxx.class.php');
-
-$PDOdb=new TPDOdb;
-
-$o=new TXXX($db);
-$o->init_db_by_vars($PDOdb);
-*/
