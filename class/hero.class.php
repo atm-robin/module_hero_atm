@@ -15,6 +15,7 @@ class Thero extends TObjetStd{
     function getPower() {
         $Tab = array();
         
+        //pour chaque élément de THapouvoir attribue l'id au nom du pouvoir dans un tableau
         foreach ($this->THaPouvoir as &$power) {
             if($power->to_delete) continue;
             
